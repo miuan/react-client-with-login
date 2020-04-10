@@ -12,11 +12,11 @@ const UserHeader = ({user, onLogout}:any) => {
             <Nav.Item>
             <Dropdown>
             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
-            ...
+            User Menu
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-            <Dropdown.Item ><Link to={'project-list'}>My Projects</Link><Badge variant="secondary">Create</Badge></Dropdown.Item>
+            <Dropdown.Item href="/user/projects">All Projects</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#/action-2">User</Dropdown.Item>
             <Dropdown.Item href="#/action-3" onClick={onLogout}>Logout</Dropdown.Item>
@@ -32,8 +32,8 @@ const UserHeader = ({user, onLogout}:any) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">All Projects</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">All Users</Dropdown.Item>
+            <Dropdown.Item href="/admin/projects">All Projects</Dropdown.Item>
+            <Dropdown.Item href="/admin/users">All Users</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
         </Nav.Item>

@@ -1,10 +1,13 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import ProjectLIst from './list'
-import FilterItem from './filteritem'
+import Table, {ITableQueries} from './table'
+import FilterItem from './filter-item'
 
 export interface IProjectFilterList {
+    name: string,
     userId?: string 
     adminMode?: boolean
+    queries: ITableQueries
+    fields: string[]
 }
 
 const createFilter = () => {
@@ -52,7 +55,7 @@ const filterDestruct = (filter: any) => {
 }
 
 
-export const ProjectFilterList:React.FC<IProjectFilterList> = ({userId, adminMode=false}) => {
+export const FilteredList:React.FC<IProjectFilterList> = ({name, userId, adminMode=false, queries, fields}) => {
 
     const [filter, setFilter] = useState(createFilter())
 
@@ -95,14 +98,14 @@ export const ProjectFilterList:React.FC<IProjectFilterList> = ({userId, adminMod
 
     return (
         <div>
-            <h1>List projects</h1>
+            <h1>{name}</h1>
             <div> 
-                <FilterItem fields={['name','id','model']} onChange={onFilterChange} />
+                <FilterItem fields={fields} onChange={onFilterChange} />
             </div>
-            <ProjectLIst filter={filter} />
+            <Table filter={filter} queries={queries} adminMode={adminMode}/>
         </div>
         
     )
 }
 
-export default ProjectFilterList
+export default FilteredList

@@ -15,7 +15,7 @@ export interface IListRowParams {
 export const ListRow: React.FC<IListRowParams> = ({ item, onDelete }) => {
   return (
     <div>
-      {item.id} <Link to={`/project/${item.id}`}>{item.name}</Link> {item.user && item.user.email}
+      {item.id} <Link to={`/user/project/${item.id}`}>{item.name}</Link> {item.user && item.user.email}
       <Button variant="danger" size="sm" onClick={()=>{onDelete(item)}}>delete</Button>
     </div>
   );
