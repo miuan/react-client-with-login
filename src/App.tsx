@@ -8,7 +8,7 @@ import {
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { ProjectEdit } from './pages/projects/edit'
-import { ProjectList } from './pages/projects/list'
+import { ProjectFilterList } from './pages/projects/filter-list'
 import { Header } from './components/header/header'
 import { UserProvider } from './contexts/userContext'
 
@@ -51,7 +51,7 @@ export default function BasicExample() {
               <Route path="/project-create" component={ProjectEdit} />
               <Route path="/project/:projectId" component={ProjectEdit} />
               <Route path="/project-list">
-                <ProjectList userId={localStorage.getItem('user.id') || ''}/>
+                <ProjectFilterList userId={localStorage.getItem('user.id') || ''}/>
               </Route>
             </Switch>
           </div>

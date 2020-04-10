@@ -5,6 +5,9 @@ import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { DEFAULT_SCHEMA } from "./defaultSchema";
 import * as _ from 'lodash'
+import { Alert } from 'react-bootstrap'
+import Unauthorized from '../../components/common/unauthorized'
+import Loading from '../../components/common/loading'
 
 const CREATE_PROJECT_MUTATION = gql`
   mutation createProject($userId: ID!, $name: String!, $schema: String!) {
@@ -39,6 +42,7 @@ export const ProjectEdit = (data:any) => {
   console.log('data >>> ', data)
 
   const [id, setId] = useState(projectId);
+  const [unauthorized, setUnauthorized] = useState(false);
 
   const [model, setModel] = useState({
     name: "project A",
@@ -55,6 +59,12 @@ export const ProjectEdit = (data:any) => {
         name: p.name,
         schema: p.models
       })
+    }, onError: (e) => {
+      console.log('onError >>> ', e.message)
+      if(e.message == 'GraphQL error: Unauhorized'){
+        setUnauthorized(true)
+      }
+      setModel({name:'', schema: ''})
     }
   });
 
@@ -102,9 +112,18 @@ export const ProjectEdit = (data:any) => {
     
   }, [id]);
 
+  if(unauthorized) {
+    return (<Unauthorized where={'project edit'} />)
+  }
+
+  if(loading) {
+    return (<Loading what={'project'}/>)
+  }
+
   return (
     <div>
       <h1>Project Edit ({projectId})</h1>
+      {error && <Alert variant={'danger'}>`${error.message}`</Alert>}
       <ProjectForm model={model} doUpdate={onUpdate} edit={Boolean(id)} />
     </div>
   );
