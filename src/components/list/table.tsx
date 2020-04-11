@@ -1,5 +1,6 @@
-import React, {useState, useMemo, useCallback, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
+import { Table as BTable, Button } from 'react-bootstrap'
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { ListRow, IListRowItem } from './row';
@@ -24,9 +25,10 @@ export interface IProjectList {
     adminMode?: boolean
     filter: any
     queries: ITableQueries
+    fields?: string[]
 }
 
-export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = false, queries}) => {
+export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = false, queries, fields}) => {
   const [unauthorized, setUnauthorized] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteObject, setDeleteObject] = useState(null)
@@ -34,7 +36,7 @@ export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = fals
   const [deletingOnDeleteDialog, setDeletingOnDeleteDialog] = useState(false)
 
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<any>({})
+  const [data, setData] = useState<any>([])
   const [error, setError] = useState()
 
   const { refetch: userRefetch, loading: userLoading } = useQuery(adminMode? queries.ADMIN_LIST_QUERY : queries.USER_LIST_QUERY, {
@@ -48,7 +50,14 @@ export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = fals
     }, onCompleted: (d) => {
       console.log('user: onCompleted', d)
       setLoading(false)
-      setData(d)
+
+      const dataFields = Object.getOwnPropertyNames(d)
+      if(dataFields.length > 0 && d[dataFields[0]].length > 0){
+        setData(d[dataFields[0]])
+      } else {
+        setData([])
+      }
+      
     },
     variables: {filter}
   });
@@ -104,11 +113,24 @@ export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = fals
         <div>
             
             {error && (<div>{`Error! ${error.message}`}</div>)}
-            <Link to={'project-create'}>Create</Link>
+            
 
-            {
-              data && data.allProjects && data.allProjects.map((projectItem:IListRowItem)=>(<ListRow item={projectItem} onDelete={onDelete} />))
-            }
+            <BTable responsive>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  {fields?.map(f => (f!=='id' && <th>{f}</th>))}
+                  {adminMode && <th>User</th>}
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {
+                data.length && data.map((projectItem:any)=>(<ListRow item={projectItem} onDelete={onDelete} fields={fields} />))
+              }
+              </tbody>
+            
+            </BTable>
             
             <DeleteModal 
                   show={showDeleteDialog} 

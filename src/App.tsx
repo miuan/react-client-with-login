@@ -9,10 +9,12 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { ProjectEdit } from './pages/projects/edit'
 import { ProjectList } from './pages/projects/list'
+import UserList from "./pages/users/list";
 import { Header } from './components/header/header'
 import { UserProvider } from './contexts/userContext'
 
 import apolloClient from './common/apolloClient'
+
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -55,6 +57,9 @@ export default function BasicExample() {
               </Route>
               <Route path="/admin/projects">
                 <ProjectList adminMode={true}/>
+              </Route>
+              <Route path="/admin/users">
+                <UserList adminMode={true}/>
               </Route>
             </Switch>
           </div>

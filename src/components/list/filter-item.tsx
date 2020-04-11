@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import { Col, Form, Alert, Button } from "react-bootstrap";
-
+import { Col, Form, Alert, Button, InputGroup, DropdownButton, Dropdown } from "react-bootstrap";
+import './filter-item.scss'
 
 const basicOptionsName = {
     contains : 'contains',
@@ -21,22 +21,22 @@ export interface IFilterItemParam {
     onChange: (filter: string | null) => void
 }
 
+  
+
 export const FilterItem: React.FC<IFilterItemParam> = ({fields, onChange}) => {
     const [fieldSelected, setFieldSelected] = useState(fields[0])
     const [optionSelected, setOptionSelected] = useState('contains')
     const [filterText, setFilterText] = useState('')
     const [filter, setFilter] = useState<string|null>('null')
 
-    const onFieldChange = (e:any) => {
-        const field = e.target.value
-        console.log('onFieldChange', e, field)
+    const onFieldChange = (field:any) => {
+        console.log('onFieldChange', field)
         setFieldSelected(field)
         processFilter(field, optionSelected, filterText)
     }
 
-    const onOptionChange = (e:any) => {
-        const option = e.target.value
-        console.log('onOptionChange', e, option)
+    const onOptionChange = (option:any) => {
+        console.log('onOptionChange', option)
         setOptionSelected(option)
         processFilter(fieldSelected, option, filterText)
     }
@@ -68,32 +68,38 @@ export const FilterItem: React.FC<IFilterItemParam> = ({fields, onChange}) => {
 
     }, [doFilter] )
 
+    const gc = (o:any) => {
+        const o2 = o
+        return () => {onFieldChange(o2)}
+    }
 
+    const go = (o:any) => {
+        const o2 = o
+        return () => {onOptionChange(o2);}
+    }
 
 
     return (
-        <Form>
-            <Form.Row>
-                {/* <Form.Group  as={Col} md="1">
-                    <Button size="sm">and</Button> / <Button size="sm">or</Button>
-                </Form.Group> */}
-                <Form.Group  as={Col} md="1">
-                    <Form.Control as="select" value={fieldSelected} onChange={onFieldChange} size="sm">
-                        {fields.map((o)=> (<option key={o}  value={o}>{o}</option>))}
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group  as={Col} md="1">
-                    <Form.Control as="select" value={optionSelected}  onChange={onOptionChange} size="sm">
-                        {Object.getOwnPropertyNames(basicOptionsName).map((o: string)=> (<option key={o} value={o}>{basicOptionsName[o as basicOptionsNameType]}</option>))}
-                    </Form.Control>
-                </Form.Group>
-                
-                <Form.Group  as={Col} md="6">
-                    <Form.Control value={filterText} onChange={onFilterChange}/>
-                </Form.Group>
-            </Form.Row>
-        </Form>
-    )
+        <InputGroup className="mb-3">
+            <DropdownButton
+                className="field-option"
+                as={InputGroup.Prepend}
+                variant="success"
+                title={fieldSelected}
+                id="input-group-dropdown-1" >
+                    {fields.map((o)=> (<Dropdown.Item key={o} onClick={gc(o)}>{o}</Dropdown.Item>))}
+            </DropdownButton>
+            <DropdownButton
+                className="select-option"
+                as={InputGroup.Prepend}
+                variant="outline-link"
+                title={basicOptionsName[optionSelected as basicOptionsNameType]}
+                id="input-group-dropdown-1" >
+                    {Object.getOwnPropertyNames(basicOptionsName).map((o)=> (<Dropdown.Item key={o} onClick={go(o)}>{basicOptionsName[o as basicOptionsNameType]}</Dropdown.Item>))}
+            </DropdownButton>
+            <Form.Control value={filterText} onChange={onFilterChange}/>
+        </InputGroup>)
+
 }
 
 export default FilterItem

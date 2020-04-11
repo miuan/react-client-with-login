@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react'
+import {Link} from 'react-router-dom'
 import Table, {ITableQueries} from './table'
 import FilterItem from './filter-item'
+import {Navbar, Button} from 'react-bootstrap'
+import './filtered-list.scss'
 
 export interface IProjectFilterList {
     name: string,
@@ -98,11 +101,21 @@ export const FilteredList:React.FC<IProjectFilterList> = ({name, userId, adminMo
 
     return (
         <div>
-            <h1>{name}</h1>
-            <div> 
+            <div className="row-head">
+                <div>
+                <h3>{name}</h3>
+                </div>
                 <FilterItem fields={fields} onChange={onFilterChange} />
+                <div>
+                <Button>Create New</Button>
+                </div>
+                
             </div>
-            <Table filter={filter} queries={queries} adminMode={adminMode}/>
+            <div className="row-table">
+           
+            <Table filter={filter} queries={queries} adminMode={adminMode} fields={fields} />
+            </div>
+            
         </div>
         
     )
