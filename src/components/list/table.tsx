@@ -26,9 +26,10 @@ export interface IProjectList {
     filter: any
     queries: ITableQueries
     fields?: string[]
+    name: string
 }
 
-export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = false, queries, fields}) => {
+export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false, queries, fields}) => {
   const [unauthorized, setUnauthorized] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteObject, setDeleteObject] = useState(null)
@@ -126,7 +127,7 @@ export const Table : React.FC<IProjectList> = ({filter, userId, adminMode = fals
               </thead>
               <tbody>
               {
-                data.length && data.map((projectItem:any)=>(<ListRow item={projectItem} onDelete={onDelete} fields={fields} />))
+                data.length && data.map((projectItem:any)=>(<ListRow name={name} item={projectItem} onDelete={onDelete} fields={fields} />))
               }
               </tbody>
             

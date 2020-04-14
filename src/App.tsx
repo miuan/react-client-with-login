@@ -14,6 +14,8 @@ import { Header } from './components/header/header'
 import { UserProvider } from './contexts/userContext'
 
 import apolloClient from './common/apolloClient'
+import UserRoleList from "./pages/user-roles/list";
+import UserRoleEdit from './pages/user-roles/edit'
 
 
 // This site has 3 pages, all of which are rendered
@@ -50,8 +52,8 @@ export default function BasicExample() {
               <Route path="/dashboard">
                 <Dashboard />
               </Route>
-              <Route path="/user/project-create" component={ProjectEdit} />
-              <Route path="/user/project/:projectId" component={ProjectEdit} />
+              <Route path="/user/projects/create" component={ProjectEdit} />
+              <Route path="/user/projects/:projectId" component={ProjectEdit} />
               <Route path="/user/projects">
                 <ProjectList userId={localStorage.getItem('user.id') || ''}/>
               </Route>
@@ -61,6 +63,11 @@ export default function BasicExample() {
               <Route path="/admin/users">
                 <UserList adminMode={true}/>
               </Route>
+              <Route path="/admin/roles">
+                <UserRoleList adminMode={true}/>
+              </Route>
+              <Route path="/user/roles/create" component={UserRoleEdit} />
+              <Route path="/user/roles/:id" component={UserRoleEdit} />
             </Switch>
           </div>
         </Router>

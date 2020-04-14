@@ -14,8 +14,17 @@ const ADMIN_LIST_QUERY = gql`
   query allUsers($filter: UserFilter){ allUsers(filter: $filter) {
       id
       email,
-      password
-    }}
+      password,
+      roles {
+        id
+        role
+      }
+    }
+    allUserRoles {
+      id,
+      role
+    }
+  }
 `;
 
 const DELETE_MUTATION = gql`
@@ -32,7 +41,7 @@ export const UserList: React.FC<{userId?: string, adminMode?: boolean}> = ({user
         <div>
             <FilteredList 
                 name={'Users'}
-                fields={['email','id','password']}
+                fields={['email','password', 'roles.role', 'roles.id']}
                 userId={userId} 
                 adminMode={adminMode}
                 queries={{USER_LIST_QUERY, ADMIN_LIST_QUERY, DELETE_MUTATION}} />

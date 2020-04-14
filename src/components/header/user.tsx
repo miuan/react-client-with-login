@@ -34,6 +34,7 @@ const UserHeader = ({user, onLogout}:any) => {
             <Dropdown.Menu>
             <Dropdown.Item href="/admin/projects">All Projects</Dropdown.Item>
             <Dropdown.Item href="/admin/users">All Users</Dropdown.Item>
+            <Dropdown.Item href="/admin/roles">All Roles</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
         </Nav.Item>

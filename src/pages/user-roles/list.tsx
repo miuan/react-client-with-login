@@ -3,7 +3,7 @@ import FilteredList from "../../components/list/filtered-list";
 import gql from 'graphql-tag';
 
 const USER_LIST_QUERY = gql`
-  query allProjects($filter: ProjectFilter){ allProjects(filter: $filter) {
+  query allUsers($filter: UserFilter){ allUsers(filter: $filter) {
       id
       name,
       models
@@ -11,32 +11,29 @@ const USER_LIST_QUERY = gql`
 `;
 
 const ADMIN_LIST_QUERY = gql`
-  query allProjects($filter: ProjectFilter){ allProjects(filter: $filter) {
-      id
-      name,
-      models,
-      user {
-          id,
-          email
-      }
-    }}
+  query allUserRoles($filter: UserRoleFilter) {
+  allUserRoles(filter: $filter) {
+      id,
+      role
+    }
+  }
 `;
 
 const DELETE_MUTATION = gql`
-  mutation deleteProject($id: ID!) {
-    deleteProject(id: $id) {
+  mutation deleteUserRole($id: ID!) {
+    deleteUserRole(id: $id) {
       id
     }
   }
 `;
 
 
-export const ProjectList: React.FC<{userId?: string, adminMode?: boolean}> = ({userId, adminMode=false}) => {
+export const UserRoleList: React.FC<{userId?: string, adminMode?: boolean}> = ({userId, adminMode=false}) => {
     return (
         <div>
             <FilteredList 
-                name={'Projects'}
-                fields={['name', 'models']}
+                name={'Roles'}
+                fields={['role']}
                 userId={userId} 
                 adminMode={adminMode}
                 queries={{USER_LIST_QUERY, ADMIN_LIST_QUERY, DELETE_MUTATION}} />
@@ -44,4 +41,4 @@ export const ProjectList: React.FC<{userId?: string, adminMode?: boolean}> = ({u
     )
 }
 
-export default ProjectList
+export default UserRoleList

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Table, {ITableQueries} from './table'
 import FilterItem from './filter-item'
 import {Navbar, Button} from 'react-bootstrap'
@@ -61,6 +61,7 @@ const filterDestruct = (filter: any) => {
 export const FilteredList:React.FC<IProjectFilterList> = ({name, userId, adminMode=false, queries, fields}) => {
 
     const [filter, setFilter] = useState(createFilter())
+    const history = useHistory()
 
     // console.log(filter, listFilter)
     const createDefaultFilter = (userId? : string) => {
@@ -98,6 +99,10 @@ export const FilteredList:React.FC<IProjectFilterList> = ({name, userId, adminMo
 
     }, [userId])
 
+    const onCreateNew = () => {
+        history.push('/user/' + name.toLowerCase() + '/create' )
+    }
+
 
     return (
         <div>
@@ -107,13 +112,13 @@ export const FilteredList:React.FC<IProjectFilterList> = ({name, userId, adminMo
                 </div>
                 <FilterItem fields={fields} onChange={onFilterChange} />
                 <div>
-                <Button>Create New</Button>
+                <Button onClick={onCreateNew}>Create New</Button>
                 </div>
                 
             </div>
             <div className="row-table">
            
-            <Table filter={filter} queries={queries} adminMode={adminMode} fields={fields} />
+            <Table name={name} filter={filter} queries={queries} adminMode={adminMode} fields={fields} />
             </div>
             
         </div>
