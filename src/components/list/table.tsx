@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom'
 import { Table as BTable, Button } from 'react-bootstrap'
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { ListRow, IListRowItem } from './row';
+import { ListRow } from './row';
 import Loading from '../common/loading';
 import DeleteModal from '../common/DeleteModal';
 import Unauthorized from '../common/unauthorized';
 import { DocumentNode } from 'graphql';
+import { IFilteredField } from './row-item';
 
 export interface IFilterWithParams {
   filter?: string
@@ -25,7 +26,7 @@ export interface IProjectList {
     adminMode?: boolean
     filter: any
     queries: ITableQueries
-    fields?: string[]
+    fields?: IFilteredField[]
     name: string
 }
 
@@ -115,12 +116,11 @@ export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false,
             
             {error && (<div>{`Error! ${error.message}`}</div>)}
             
-
             <BTable responsive>
               <thead>
                 <tr>
                   <th>Id</th>
-                  {fields?.map(f => (f!=='id' && <th>{f}</th>))}
+                  {fields?.map(f => (f!=='id' && <th>{(f as any).name ? (f as any).name : f}</th>))}
                   {adminMode && <th>User</th>}
                   <th></th>
                 </tr>

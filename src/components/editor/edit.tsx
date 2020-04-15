@@ -9,7 +9,7 @@ import { Alert } from 'react-bootstrap'
 import Unauthorized from '../common/unauthorized'
 import Loading from '../common/loading'
 
-const getDataFromRaw = (rawData: any) => {
+export const getDataFromRaw = (rawData: any) => {
   const rawName = Object.keys(rawData)[0]
   return rawData[rawName]
 }

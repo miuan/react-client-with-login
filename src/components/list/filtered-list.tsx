@@ -4,13 +4,16 @@ import Table, {ITableQueries} from './table'
 import FilterItem from './filter-item'
 import {Navbar, Button} from 'react-bootstrap'
 import './filtered-list.scss'
+import { IFilteredField } from './row-item'
+
+
 
 export interface IProjectFilterList {
     name: string,
     userId?: string 
     adminMode?: boolean
     queries: ITableQueries
-    fields: string[]
+    fields: IFilteredField[]
 }
 
 const createFilter = () => {
