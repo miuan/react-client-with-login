@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import { BaseForm, IProjectModel } from "./form";
+import { BaseForm, TBaseForm } from "./form";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { DEFAULT_SCHEMA } from "../../pages/projects/defaultSchema";
@@ -8,13 +8,20 @@ import * as _ from 'lodash'
 import { Alert } from 'react-bootstrap'
 import Unauthorized from '../common/unauthorized'
 import Loading from '../common/loading'
+import { TField, TControlField } from "./control";
 
 export const getDataFromRaw = (rawData: any) => {
   const rawName = Object.keys(rawData)[0]
   return rawData[rawName]
 }
 
-export const BaseEdit = ({id: externId, query, name, fields}:any) => {
+export type TBaseEdit = Pick<TBaseForm, 'fields'> & {
+  id: string
+  name: string
+  query: any
+}
+
+export const BaseEdit:React.FC<TBaseEdit> = ({id: externId, query, name, fields}) => {
   
 
   const [localId, setLocalId] = useState(externId);
@@ -35,8 +42,9 @@ export const BaseEdit = ({id: externId, query, name, fields}:any) => {
       console.log('Edit:QUERY', {externId, loadedDataRaw, loadedData})
 
       if(loadedData){
-        const np = fields.reduce((o:any, field:string)=> {
-          o[field] = loadedData[field]
+        const np = fields.reduce((o:any, field: TField)=> {
+          const fieldName = (field as TControlField).name ? (field as TControlField).name : field as string
+          o[fieldName] = loadedData[fieldName]
           return o
         }, {})
 

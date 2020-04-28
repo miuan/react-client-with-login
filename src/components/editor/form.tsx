@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
 
-import BaseControl from './control'
+import BaseControl, { TField } from './control'
 
-export interface IProjectModel {
-  name: string;
-  schema: string;
-}
-
-export interface IProjectForm {
+export type TBaseForm = {
   model: any;
   doUpdate: (model:any) => void;
   edit?: boolean
-  fields: string[]
+  fields: TField[]
 }
 
-export const BaseForm: React.FC<IProjectForm> = ({ model, fields, doUpdate, edit = false }) => {
+export const BaseForm: React.FC<TBaseForm> = ({ model, fields, doUpdate, edit = false }) => {
   
-
   const onUpdate = () => {
       doUpdate(model)
   }
