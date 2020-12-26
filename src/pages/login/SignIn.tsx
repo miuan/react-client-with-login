@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import gql from 'graphql-tag'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory } from "react-router-dom";
 import { User, useUserDispatch, USER_LOGIN } from '../../contexts/userContext';
 import { Modal, Form, Button, Alert } from 'react-bootstrap'

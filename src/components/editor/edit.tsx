@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import { BaseForm, TBaseForm } from "./form";
 import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { DEFAULT_SCHEMA } from "../../pages/projects/defaultSchema";
 import * as _ from 'lodash'
 import { Alert } from 'react-bootstrap'

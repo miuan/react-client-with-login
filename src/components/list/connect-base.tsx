@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DropdownButton, Dropdown, Form } from "react-bootstrap";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { getDataFromRaw } from "../../components/editor/edit";
 
 export const ConnectBase: React.FC<{value:any, names?:any, gql: any, item: any}> = ({value, names, gql, item}) => {

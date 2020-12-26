@@ -36,7 +36,7 @@ const QUERY = gql`
 `;
 
 const ProjectSchemaControl:React.FC<TControl> = ({onChange, value}) => (
-    <Form.Control as="textarea" rows="30" {...{onChange, value}} />
+    <Form.Control as="textarea" rows={30} {...{onChange, value}} />
 )
 
 export const ProjectEdit = (data:any) => {

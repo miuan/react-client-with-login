@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { Table as BTable, Button } from 'react-bootstrap'
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import { ListRow } from './row';
 import Loading from '../common/loading';
 import DeleteModal from '../common/DeleteModal';
@@ -47,7 +47,7 @@ export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false,
       if(e.message == 'GraphQL error: Unauhorized'){
         setUnauthorized(true)
       } else {
-        setError(e)
+        //setError(e.toString())
       }
     }, onCompleted: (d) => {
       console.log('user: onCompleted', d)
@@ -114,7 +114,7 @@ export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false,
     return (
         <div>
             
-            {error && (<div>{`Error! ${error.message}`}</div>)}
+            {/* {error && (<div>{`Error! ${error.message}`}</div>)} */}
             
             <BTable responsive>
               <thead>

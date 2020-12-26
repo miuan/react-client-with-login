@@ -1,9 +1,5 @@
-import { ApolloClient } from 'apollo-client';
-import { HttpLink} from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink, concat } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { onError } from "apollo-link-error";
+import { ApolloClient, InMemoryCache , createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -17,22 +13,23 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+const httpLink = createHttpLink({
+  uri: 'http://localhost:3001/client/5fe7232c422c9b7914f1943b/project/5fe7401b8628aa3818715a62/graphql',
+})
 
-const errroLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
-    );
+// const errroLink = onError(({ graphQLErrors, networkError }) => {
+//   if (graphQLErrors)
+//     graphQLErrors.map(({ message, locations, path }) =>
+//       console.log(
+//         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+//       ),
+//     );
 
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
-
-const link = new HttpLink({ uri: 'http://localhost:3001/entry/graphql' });
+//   if (networkError) console.log(`[Network error]: ${networkError}`);
+// });
 
 export const apolloClient = new ApolloClient({
-  link: ApolloLink.from([authLink, errroLink, link]),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
