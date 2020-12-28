@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import { Modal, Form, Alert, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { User, useUserDispatch, USER_LOGIN } from '../../contexts/userContext';
@@ -100,76 +99,78 @@ export const Register: React.FC<{ show: boolean; onHide: () => void }> = ({
     }
   };
 
-  return (
-    <div>
-      <Modal show={show} onHide={onHide}>
-        <Modal.Header closeButton>
-          <div>
-            <Modal.Title>SigIn</Modal.Title>
-          </div>
-        </Modal.Header>
+  // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-in/SignIn.js
+  return (<></>)
+  // return (
+  //   <div>
+  //     <Modal show={show} onHide={onHide}>
+  //       <Modal.Header closeButton>
+  //         <div>
+  //           <Modal.Title>SigIn</Modal.Title>
+  //         </div>
+  //       </Modal.Header>
 
-        <Modal.Body>
-          {loading && <div>Loading...</div>}
-          <div>
-            {invalidEmail && (
-              <Alert variant={"danger"}>Email is probably taken, did you <Link to="/forgotten-password">forgotten password</Link>?</Alert>
-            )}
-            {invalidCopy && (
-              <Alert variant={"danger"}>The retyped password is not the same</Alert>
-            )}
-          </div>
+  //       <Modal.Body>
+  //         {loading && <div>Loading...</div>}
+  //         <div>
+  //           {invalidEmail && (
+  //             <Alert variant={"danger"}>Email is probably taken, did you <Link to="/forgotten-password">forgotten password</Link>?</Alert>
+  //           )}
+  //           {invalidCopy && (
+  //             <Alert variant={"danger"}>The retyped password is not the same</Alert>
+  //           )}
+  //         </div>
 
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={onEmailChange}
-                value={email}
-                isInvalid={invalidEmail}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
+  //         <Form>
+  //           <Form.Group controlId="formBasicEmail">
+  //             <Form.Label>Email address</Form.Label>
+  //             <Form.Control
+  //               type="email"
+  //               placeholder="Enter email"
+  //               onChange={onEmailChange}
+  //               value={email}
+  //               isInvalid={invalidEmail}
+  //             />
+  //             <Form.Text className="text-muted">
+  //               We'll never share your email with anyone else.
+  //             </Form.Text>
+  //           </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={onPasswordChange}
-                value={pass}
-                isInvalid={invalidPass}
-              />
-            </Form.Group>
+  //           <Form.Group controlId="formBasicPassword">
+  //             <Form.Label>Password</Form.Label>
+  //             <Form.Control
+  //               type="password"
+  //               placeholder="Password"
+  //               onChange={onPasswordChange}
+  //               value={pass}
+  //               isInvalid={invalidPass}
+  //             />
+  //           </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Re-Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Retype Password"
-                onChange={onCopyChange}
-                value={copy}
-                isInvalid={invalidCopy}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
+  //           <Form.Group controlId="formBasicPassword">
+  //             <Form.Label>Re-Password</Form.Label>
+  //             <Form.Control
+  //               type="password"
+  //               placeholder="Retype Password"
+  //               onChange={onCopyChange}
+  //               value={copy}
+  //               isInvalid={invalidCopy}
+  //             />
+  //           </Form.Group>
+  //         </Form>
+  //       </Modal.Body>
 
-        <Modal.Footer>
-          <Button variant="primary" type="submit" onClick={() => onRegister()}>
-            Register
-          </Button>
-          <Button variant="secondary" onClick={onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
-  );
+  //       <Modal.Footer>
+  //         <Button variant="primary" type="submit" onClick={() => onRegister()}>
+  //           Register
+  //         </Button>
+  //         <Button variant="secondary" onClick={onHide}>
+  //           Close
+  //         </Button>
+  //       </Modal.Footer>
+  //     </Modal>
+  //   </div>
+  // );
 };
 
 export default Register;

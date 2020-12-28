@@ -5,7 +5,6 @@ import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
 import { DEFAULT_SCHEMA } from "../../pages/projects/defaultSchema";
 import * as _ from 'lodash'
-import { Alert } from 'react-bootstrap'
 import Unauthorized from '../common/unauthorized'
 import Loading from '../common/loading'
 import { TField, TControlField } from "./control";
@@ -117,7 +116,7 @@ export const BaseEdit:React.FC<TBaseEdit> = ({id: externId, query, name, fields}
   return (
     <div>
       <h1>{name} Edit ({externId})</h1>
-      {error && <Alert variant={'danger'}>`${error.message}`</Alert>}
+      {/* {error && <Alert variant={'danger'}>`${error.message}`</Alert>} */}
       <BaseForm model={model} doUpdate={onUpdate} edit={Boolean(localId)} fields={fields} />
     </div>
   );

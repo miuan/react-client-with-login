@@ -1,5 +1,5 @@
+import Button from "@material-ui/core/Button";
 import React, { useState, useEffect } from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
 
 import BaseControl, { TField } from './control'
 
@@ -22,10 +22,10 @@ export const BaseForm: React.FC<TBaseForm> = ({ model, fields, doUpdate, edit = 
 
   return (
     <div>
-      <Form>
+      <form>
         {fields.map((field:any)=>(<BaseControl model={model} field={field} onChange={onChange}/>))}
         <Button onClick={onUpdate}>{edit ? 'Update' : 'Create'}</Button>
-      </Form>
+      </form>
     </div>
   );
 };

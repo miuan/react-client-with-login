@@ -3,8 +3,9 @@ import * as _ from 'lodash'
 import gql from "graphql-tag";
 
 import BaseEdit from "../../components/editor/edit"
-import { Form } from "react-bootstrap";
+
 import { TControl } from "../../components/editor/control";
+import { TextareaAutosize, TextField } from "@material-ui/core";
 
 
 const CREATE_MUTATION = gql`
@@ -36,7 +37,7 @@ const QUERY = gql`
 `;
 
 const ProjectSchemaControl:React.FC<TControl> = ({onChange, value}) => (
-    <Form.Control as="textarea" rows={30} {...{onChange, value}} />
+  <TextareaAutosize rows={30} {...{onChange, value}} />
 )
 
 export const ProjectEdit = (data:any) => {

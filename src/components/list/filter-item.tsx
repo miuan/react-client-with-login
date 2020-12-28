@@ -1,5 +1,5 @@
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import React, {useState, useEffect, useCallback} from 'react'
-import { Col, Form, Alert, Button, InputGroup, DropdownButton, Dropdown } from "react-bootstrap";
 import './filter-item.scss'
 
 const basicOptionsName = {
@@ -79,26 +79,49 @@ export const FilterItem: React.FC<IFilterItemParam> = ({fields, onChange}) => {
     }
 
 
-    return (
-        <InputGroup className="mb-3">
-            <DropdownButton
-                className="field-option"
-                as={InputGroup.Prepend}
-                variant="success"
-                title={fieldSelected}
-                id="input-group-dropdown-1" >
-                    {fields.map((o)=> (<Dropdown.Item key={o} onClick={gc(o)}>{o}</Dropdown.Item>))}
-            </DropdownButton>
-            <DropdownButton
-                className="select-option"
-                as={InputGroup.Prepend}
-                variant="outline-link"
-                title={basicOptionsName[optionSelected as basicOptionsNameType]}
-                id="input-group-dropdown-1" >
-                    {Object.getOwnPropertyNames(basicOptionsName).map((o)=> (<Dropdown.Item key={o} onClick={go(o)}>{basicOptionsName[o as basicOptionsNameType]}</Dropdown.Item>))}
-            </DropdownButton>
-            <Form.Control value={filterText} onChange={onFilterChange}/>
-        </InputGroup>)
+    return (<FormControl>
+    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={fieldSelected}
+        //   onChange={handleChange}
+        >
+            {fields.map((o)=> (<MenuItem value={o} onClick={gc(o)}>{o}</MenuItem>))}
+         
+        </Select>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select2"
+          value={fieldSelected}
+        //   onChange={handleChange}
+        >
+           {Object.getOwnPropertyNames(basicOptionsName).map((o)=> (<MenuItem value={o} onClick={go(o)}>{basicOptionsName[o as basicOptionsNameType]}</MenuItem>))}
+         
+        </Select>
+        <TextField id="standard-basic" label="Standard" value={filterText} onChange={onFilterChange} />
+      </FormControl>)
+
+    // return (
+    //     <InputGroup className="mb-3">
+    //         <DropdownButton
+    //             className="field-option"
+    //             as={InputGroup.Prepend}
+    //             variant="success"
+    //             title={fieldSelected}
+    //             id="input-group-dropdown-1" >
+    //                 {fields.map((o)=> (<Dropdown.Item key={o} onClick={gc(o)}>{o}</Dropdown.Item>))}
+    //         </DropdownButton>
+    //         <DropdownButton
+    //             className="select-option"
+    //             as={InputGroup.Prepend}
+    //             variant="outline-link"
+    //             title={basicOptionsName[optionSelected as basicOptionsNameType]}
+    //             id="input-group-dropdown-1" >
+    //                 {Object.getOwnPropertyNames(basicOptionsName).map((o)=> (<Dropdown.Item key={o} onClick={go(o)}>{basicOptionsName[o as basicOptionsNameType]}</Dropdown.Item>))}
+    //         </DropdownButton>
+    //         <Form.Control value={filterText} onChange={onFilterChange}/>
+    //     </InputGroup>)
 
 }
 

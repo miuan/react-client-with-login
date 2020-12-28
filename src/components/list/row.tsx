@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from 'react-bootstrap'
 import './row.scss'
 import { ListRowItem, IFilteredField } from "./row-item";
+import { Button } from "@material-ui/core";
 
 export interface IListRowItem {
   id: string;
@@ -25,7 +25,7 @@ export const ListRow: React.FC<IListRowParams> = ({ item, onDelete, name, fields
       {item.user && (<td>{item.user.email}</td>)}
       
       <td className="right">
-        <Button variant="danger" size="sm" onClick={()=>{onDelete(item)}}>delete</Button>
+        <Button  onClick={()=>{onDelete(item)}}>delete</Button>
       </td>
     </tr>
   );

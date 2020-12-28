@@ -1,9 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { DropdownButton, Dropdown, Form } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import { getDataFromRaw } from "../../components/editor/edit";
+import {Checkbox, FormControl, Input, InputLabel, ListItemText, MenuItem, Select} from '@material-ui/core'
+import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      maxWidth: 300,
+    },
+    chips: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    chip: {
+      margin: 2,
+    },
+    noLabel: {
+      marginTop: theme.spacing(3),
+    },
+  }),
+);
 
 export const ConnectBase: React.FC<{value:any, names?:any, gql: any, item: any}> = ({value, names, gql, item}) => {
+    const classes = useStyles()
     const element = value
     const name = names.length>1 && names[1]
     const elementTitle = element.push && element.reduce && names.length > 1 ? (element as any[]).reduce((p, e)=>p + `, ${e[name]}`, '').substr(2) : element
@@ -107,16 +130,33 @@ export const ConnectBase: React.FC<{value:any, names?:any, gql: any, item: any}>
     //   return (<>ahoj: {(element as any[]).reduce((p, e)=>p + e[names[1]], '')}</>)
     // }
   
-    return (<DropdownButton id="dropdown-basic-button" title={title}>
-        {data && data.map((d:any)=>(
-        <Dropdown.Item  onClick={(e:any) => onChecked(d)} >
-          <Form.Check 
-              type="checkbox" 
-              label={d.label} 
-              checked={d.checked} />
-        </Dropdown.Item>))
-        }
-      </DropdownButton>)
+return (<FormControl className={classes.formControl}>
+  <InputLabel id="demo-mutiple-checkbox-label">{title}</InputLabel>
+  <Select
+    labelId="demo-mutiple-checkbox-label"
+    id="demo-mutiple-checkbox"
+    multiple
+    input={<Input />}
+    renderValue={(selected) => (selected as string[]).join(', ')}
+  >
+    {data && data.map((d) => (
+      <MenuItem key={d.label} value={d.checked} onClick={(e:any) => onChecked(d)}>
+        <Checkbox checked={d.checked}  />
+        <ListItemText primary={d.label} />
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>)
+    // return (<DropdownButton id="dropdown-basic-button" title={title}>
+    //     {data && data.map((d:any)=>(
+    //     <Dropdown.Item  onClick={(e:any) => onChecked(d)} >
+    //       <Form.Check 
+    //           type="checkbox" 
+    //           label={d.label} 
+    //           checked={d.checked} />
+    //     </Dropdown.Item>))
+    //     }
+    //   </DropdownButton>)
   }
 
   export default ConnectBase

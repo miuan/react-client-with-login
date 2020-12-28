@@ -1,8 +1,8 @@
-import React from "react";
-import { Alert } from 'react-bootstrap'
+import React from "react"
+import {Dialog } from '@material-ui/core';
 
 export const Unauthorized = ({where = ''}) => {
-    return (<Alert variant={'danger'}>{`Unauthorized ${where} access`}</Alert>)
+    return (<Dialog open={true}>{`Unauthorized ${where} access`}</Dialog >)
 }
 
 export default Unauthorized

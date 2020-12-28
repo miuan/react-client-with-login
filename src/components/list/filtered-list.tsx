@@ -2,9 +2,9 @@ import React, {useState, useEffect, useCallback} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import Table, {ITableQueries} from './table'
 import FilterItem from './filter-item'
-import {Navbar, Button} from 'react-bootstrap'
 import './filtered-list.scss'
 import { IFilteredField } from './row-item'
+import { Button } from '@material-ui/core'
 
 
 

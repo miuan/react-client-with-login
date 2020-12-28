@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
+import { FormGroup, FormControl, FormLabel, InputLabel, Input} from '@material-ui/core';
 
 export type TControl = {
   placeholder? : string
@@ -44,22 +44,28 @@ export const BaseControl: React.FC<IBaseControl> = ({ model, field, onChange, ed
   }
 
   return (
-    <Form.Group controlId="formBasicEmail">
-          <Form.Label>{label}</Form.Label>
-          {control ? 
-            control({onChange:(env: any) => onUpdate(env.target.value), value}) :
-            <Form.Control
-              type="text"
-              placeholder=""
-              onChange={(env: any) => onUpdate(env.target.value)}
-              value={value}
-            />
-          }
-          <FormControl.Feedback type="valid">
-            Yeah you did it!
-          </FormControl.Feedback>
-        </Form.Group>
-  );
+    <FormControl>
+        <InputLabel htmlFor="component-simple">{label}</InputLabel>
+        <Input id="component-simple" value={value} onChange={(env: any) => onUpdate(env.target.value)} />
+    </FormControl>
+  )
+  // return (
+  //   <FormGroup controlId="formBasicEmail">
+  //         <FormLabel>{label}</FormLabel>
+  //         {control ? 
+  //           control({onChange:(env: any) => onUpdate(env.target.value), value}) :
+  //           <FormControl
+  //             type="text"
+  //             placeholder=""
+  //             onChange={(env: any) => onUpdate(env.target.value)}
+  //             value={value}
+  //           />
+  //         }
+  //         <FormControlFeedback type="valid">
+  //           Yeah you did it!
+  //         </FormControl.Feedback>
+  //       </Form.Group>
+  // );
 };
 
 export default BaseControl

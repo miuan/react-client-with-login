@@ -1,14 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
-import Nav from 'react-bootstrap/Nav'
-import Badge from 'react-bootstrap/Badge'
+import {Button, Menu, MenuItem} from '@material-ui/core'
 
 const UserHeader = ({user, onLogout}:any) => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    }
     return (
         <div>
-        <Nav>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                Open Menu
+            </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem href="/user/projects" onClick={handleClose}>All Projects</MenuItem>
+                <MenuItem onClick={handleClose}>User</MenuItem>
+                <MenuItem onClick={onLogout}>Logout</MenuItem>
+            </Menu>
+        {/* <Nav>
             <Nav.Item>
             <Dropdown>
             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic">
@@ -39,7 +59,7 @@ const UserHeader = ({user, onLogout}:any) => {
         </Dropdown>
         </Nav.Item>
 
-    </Nav>
+    </Nav> */}
 
     </div>
 

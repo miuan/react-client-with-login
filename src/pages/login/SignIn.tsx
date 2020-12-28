@@ -3,7 +3,8 @@ import gql from 'graphql-tag'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory } from "react-router-dom";
 import { User, useUserDispatch, USER_LOGIN } from '../../contexts/userContext';
-import { Modal, Form, Button, Alert } from 'react-bootstrap'
+import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, makeStyles, TextField, Typography } from '@material-ui/core';
+
 
 const LOGIN_QL = gql`
   query Login($email: String!, $pass: String!) {
@@ -19,7 +20,42 @@ const LOGIN_QL = gql`
 }
 `;
 
+function Copyright() {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+  
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  
+
 export const SignIn: React.FC<{ show: boolean, onHide: () => void }> = ({ show, onHide: doHide }) => {
+    const classes = useStyles();
     const [email, setEmail] = useState(localStorage.getItem('user.email') as string)
     const [pass, setPass] = useState('')
 
@@ -66,10 +102,81 @@ export const SignIn: React.FC<{ show: boolean, onHide: () => void }> = ({ show, 
         setInvalidPass(false)
         doHide()
     }
-
+    // https://material-ui.com/getting-started/templates/sign-up/
     return (
-        <div>
-            <Modal show={show} onHide={onHide}>
+        
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          {/* <LockOutlinedIcon /> */}
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={onEmailChange} value={email}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={onPasswordChange} value={pass}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => onLogin()}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+
+           
+
+    )
+}
+
+ /* <Modal show={show} onHide={onHide}>
                 <Modal.Header closeButton>
                     <div>
                         <Modal.Title>SigIn</Modal.Title>
@@ -105,11 +212,6 @@ export const SignIn: React.FC<{ show: boolean, onHide: () => void }> = ({ show, 
                     <Button variant="primary" type="submit" onClick={() => onLogin()}>SigIn</Button>
                     <Button variant="secondary" onClick={onHide}>Close</Button>
                 </Modal.Footer>
-            </Modal>
-
-
-        </div>
-    )
-}
+            </Modal> */
 
 export default SignIn

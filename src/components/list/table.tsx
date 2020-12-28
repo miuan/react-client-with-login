@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import { Table as BTable, Button } from 'react-bootstrap'
-
+import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { useQuery, useMutation } from '@apollo/client';
 import { ListRow } from './row';
 import Loading from '../common/loading';
@@ -9,6 +8,29 @@ import DeleteModal from '../common/DeleteModal';
 import Unauthorized from '../common/unauthorized';
 import { DocumentNode } from 'graphql';
 import { IFilteredField } from './row-item';
+import { TableContainer, Table as CTable, TableBody, TableHead, TableRow, TableCell, Paper } from '@material-ui/core';
+
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }),
+)(TableCell)
+
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }),
+)(TableRow)
 
 export interface IFilterWithParams {
   filter?: string
@@ -30,7 +52,15 @@ export interface IProjectList {
     name: string
 }
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+})
+
 export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false, queries, fields}) => {
+  const classes = useStyles()
+
   const [unauthorized, setUnauthorized] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteObject, setDeleteObject] = useState(null)
@@ -113,10 +143,34 @@ export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false,
 
     return (
         <div>
-            
             {/* {error && (<div>{`Error! ${error.message}`}</div>)} */}
             
-            <BTable responsive>
+            <TableContainer component={Paper}>
+              <CTable className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    {fields?.map(f => (f!=='id' && <StyledTableCell>{(f as any).name ? (f as any).name : f}</StyledTableCell>))}
+                    {adminMode && <StyledTableCell>User</StyledTableCell>}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                { data.length && data.map((projectItem:any)=>(<StyledTableRow><ListRow name={name} item={projectItem} onDelete={onDelete} fields={fields} /></StyledTableRow>)) }
+                  {/* {rows.map((row) => (
+                    <StyledTableRow key={row.name}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">{row.calories}</StyledTableCell>
+                      <StyledTableCell align="right">{row.fat}</StyledTableCell>
+                      <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                      <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                    </StyledTableRow> ))} */}
+                </TableBody>
+              </CTable>
+            </TableContainer>
+
+
+            {/* <BTable responsive>
               <thead>
                 <tr>
                   <th>Id</th>
@@ -131,7 +185,7 @@ export const Table : React.FC<IProjectList> = ({filter, name, adminMode = false,
               }
               </tbody>
             
-            </BTable>
+            </BTable> */}
             
             <DeleteModal 
                   show={showDeleteDialog} 
